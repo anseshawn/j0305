@@ -11,14 +11,19 @@ import java.util.Scanner;
   실수령액 = 본봉 + 수당 - 공제액
   계산부는 비즈니스로직으로 처리(서비시객체를 사용)
 */
-public class Test1Run_급여계산 {
+public class Test1Run_급여계산2 {
+//	static Test1VO[] data = new Test1VO[100];
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		Test1VO vo = new Test1VO();
-		Test1Service service = new Test1Service();
+		Test1Service2 service = new Test1Service2();
+		Test1VO[] data = new Test1VO[100];
+		
+		int cnt = 0;
 		
 		while(true) {
-			System.out.print("사원코드를 입력하세요 ==> ");
+			Test1VO vo = new Test1VO();
+			System.out.print("사원코드를 숫자로 입력하세요 ==> ");
 			vo.setNo(sc.next());
 			System.out.print("사원명을 입력하세요 ==> ");
 			vo.setName(sc.next());
@@ -37,10 +42,17 @@ public class Test1Run_급여계산 {
 			// 입력받은 자료들로 급여 계산하기
 			service.netPayCalculate(vo);
 			
+  		// 처리된 자료들을 배열에 저장하기
+			data[cnt] = vo;
+			cnt++;
+			
 			System.out.print("작업을 계속하시겠습니까?(Y/N) ");
 			String yn = sc.next();
 			if(yn.toUpperCase().charAt(0) == 'N') break;
 		}
+		// 출력하기
+		service.netpayPrint(data, cnt);
+		
 		sc.close();
 	}
 }
